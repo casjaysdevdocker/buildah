@@ -126,9 +126,9 @@ CONTAINER_IP_ADDRESS="$(ip a 2>/dev/null | grep 'inet' | grep -v '127.0.0.1' | a
 # Overwrite variables
 WORKDIR=""
 SERVICE_PORT="$PORT"
-SERVICE_NAME="buildah"
+SERVICE_NAME="bash"
 SERVICE_USER="${SERVICE_USER:-root}"
-SERVICE_COMMAND="$SERVICE_NAME"
+SERVICE_COMMAND="$SERVICE_NAME -l"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 [ "$SERVICE_PORT" = "443" ] && SSL_ENABLED="true"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
