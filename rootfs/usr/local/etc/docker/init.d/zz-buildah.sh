@@ -23,21 +23,21 @@ done
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # execute command variables
-WORKDIR=""                                # set working directory
-SERVICE_UID="0"                           # set the user id
-SERVICE_USER="root"                       # execute command as another user
-SERVICE_PORT=""                           # port which service is listening on
-EXEC_CMD_BIN="build-project"                    # command to execute
-EXEC_CMD_ARGS=""                         # command arguments
-PRE_EXEC_MESSAGE=""                       # Show message before execute
+WORKDIR=""                   # set working directory
+SERVICE_UID="0"              # set the user id
+SERVICE_USER="root"          # execute command as another user
+SERVICE_PORT=""              # port which service is listening on
+EXEC_CMD_BIN="build-project" # command to execute
+EXEC_CMD_ARGS=""             # command arguments
+PRE_EXEC_MESSAGE=""          # Show message before execute
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Other variables that are needed
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # use this function to update config files - IE: change port
 __update_conf_files() {
-[ -L "/var/lib/containers" ]||
- ln -sf "/data/containers" "/var/lib/containers"
+  [ -L "/var/lib/containers" ] ||
+    ln -sf "/data/containers" "/var/lib/containers"
   return 0
 }
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -72,7 +72,7 @@ __pcheck() { [ -n "$(type -P pgrep 2>/dev/null)" ] && pgrep -x "$1" &>/dev/null 
 __pgrep() { __pcheck "${1:-EXEC_CMD_BIN}" || __ps aux 2>/dev/null | grep -Fw " ${1:-$EXEC_CMD_BIN}" | grep -qv ' grep' | grep '^' && return 0 || return 10; }
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Allow ENV_ variable
-[ -f "/config/env/$EXEC_CMD_BIN.sh" ] && "/config/env/$EXEC_CMD_BIN.sh" # Import env file
+[ -f "/config/env/${SERVICE_NAME:-$SCRIPT_NAME}.sh" ] && "/config/env/${SERVICE_NAME:-$SCRIPT_NAME}.sh" # Import env file
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 WORKDIR="${ENV_WORKDIR:-$WORKDIR}"                            # change to directory
 SERVICE_USER="${ENV_SERVICE_USER:-$SERVICE_USER}"             # execute command as another user
